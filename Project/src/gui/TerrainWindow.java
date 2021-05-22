@@ -1,11 +1,17 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
 
 public class TerrainWindow extends JFrame {
 
@@ -19,8 +25,9 @@ public class TerrainWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TerrainWindow frame = new TerrainWindow();
+					TerrainWindow frame = new TerrainWindow(null);
 					frame.setVisible(true);
+					frame.pack(); // optimise la taille de la fenetre
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -31,13 +38,31 @@ public class TerrainWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TerrainWindow() {
+	
+	public TerrainWindow(JPanel mainWindow) {
+		
+		setTitle("Création du terrain");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setLocationRelativeTo(mainWindow); // Placer au centre de la fenetre principale
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout());
+		
+        
+        // Trucs à remplir
+        JPanel panel = new JPanel(new GridLayout(5,2,10,10)); contentPane.add(panel,BorderLayout.CENTER);
+        panel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        panel.setBackground(Color.LIGHT_GRAY);
+        
+        panel.add(new JLabel("Abs Min: ")); panel.add(new JTextField());
+        panel.add(new JLabel("Abs Max: ")); panel.add(new JTextField());
+        panel.add(new JLabel("Ord Min: ")); panel.add(new JTextField());
+        panel.add(new JLabel("Ord Max: ")); panel.add(new JTextField());
+        
+        // Boutons du bas
+        JPanel buttons = new JPanel( new FlowLayout(FlowLayout.RIGHT)); contentPane.add(buttons,BorderLayout.SOUTH);
+        JButton apply = new JButton("Apply");  buttons.add(apply);
+        JButton cancel = new JButton("Cancel"); buttons.add(cancel);
+        
 	}
-
 }

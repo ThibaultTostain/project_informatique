@@ -4,12 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyVetoException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -63,7 +66,7 @@ public class MainWindow extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		this.setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(new BorderLayout());
 		
 		contentPane.add(outils(),BorderLayout.NORTH);
 		
@@ -125,8 +128,9 @@ public class MainWindow extends JFrame {
 	
 	private void newTreilli(ActionEvent event) { // event lorsqu'on veut créer un nouveau treilli
 		//JOptionPane.showMessageDialog(this, "New Treilli");
-		TerrainWindow tw = new TerrainWindow();
-		tw.setVisible(true);
+		TerrainWindow frame = new TerrainWindow(contentPane);
+		frame.setVisible(true);
+		frame.pack(); // optimise la taille de la fenetre
 	}
 
 	private JToolBar outils() {
