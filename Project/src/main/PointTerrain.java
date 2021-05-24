@@ -44,7 +44,7 @@ public class PointTerrain {
 	
 	@Override
 	public String toString() {
-		return "(" + this.getAbs() + ", " + this.getOrd() + ")";
+		return this.getAbs() + ";" + this.getOrd();
 	}
 	
 	// Fonctions et Procedures

@@ -1,13 +1,10 @@
 Terrain;-10.0;10.0;-10.0;10.0;
-Triangle;TT0;(0.0, 0.0);(0.0, 2.0);(-1.0, 1.0);
-FINTRIANGLES
+Triangle;1;TT0;0.0;0.0;0.0;2.0;-1.0;1.0;
+Treilli;TR0
 TypeBarre;TB0;200.0;1.0;5.0;1000.0;600.0;
-FINCATALOGUE
-AppuiDouble;S0;TR0;[(0.0, 0.0), (0.0, 2.0)];1.0
-AppuiSimple;S1;TR0;[(0.0, 0.0), (0.0, 2.0)];0.0
-NoeudSimple;S2;(1.0,1.0)
-FINNOEUDS
+AppuiDouble;S0;TR0;0.0;0.0;0.0;2.0;1.0
+AppuiSimple;S1;TR0;0.0;0.0;0.0;2.0;0.0
+NoeudSimple;S2;1.0;1.0
 Barre;B0,2;TB0;S0;S2
 Barre;B1,2;TB0;S2;S1
 Barre;B0,1;TB0;S1;S0
-FINBARRES

@@ -32,6 +32,10 @@ public class Treilli {
 		return this.id;
 	}
 	
+	public void setId(String c) {
+		this.id = c ;
+	}
+	
 	public Terrain getTerrain() {
 		return terrain;
 	}
@@ -46,6 +50,14 @@ public class Treilli {
 	
 	public List<TypeBarre> getTypeList() {
 		return typeList;
+	}
+	
+	public void addNoeudList(Noeud e) {
+		this.noeudList.add(e);
+	}
+	
+	public void addBarredList(Barre e) {
+		this.barreList.add(e);
 	}
 	
 	// Fonctions et Procedures

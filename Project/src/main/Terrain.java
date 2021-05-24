@@ -25,6 +25,10 @@ public class Terrain {
 		return sol;
 	}
 
+	public void addSol(TriangleTerrain Tri) {
+		this.sol.add(Tri);
+	}
+	
 	public double getAbsMin() {
 		return absMin;
 	}

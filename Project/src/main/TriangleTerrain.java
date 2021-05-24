@@ -9,8 +9,8 @@ public class TriangleTerrain {
 	private static long counter = 0;
 	
 	// Constructeurs
-	
-	public TriangleTerrain(PointTerrain start, PointTerrain middle, PointTerrain end) {
+
+	public TriangleTerrain( PointTerrain start, PointTerrain middle, PointTerrain end) {
 		super();
 		if(start.getTerrain() != middle.getTerrain() || middle.getTerrain() != end.getTerrain()) {throw new Error("");}
 		this.terrain = start.getTerrain();
@@ -25,12 +25,24 @@ public class TriangleTerrain {
 		/* On associe à un triangle 3 segments et à un segment son triangle associé.
 		 * De cette manière on peut retrouver un triangle à partir d'un segment.
 		 */
-		
 		this.id = "TT"+newId(); // Identificateur : "TTN" où N est un entier
 		this.terrain.getSol().add(this); // On ajout le triangle à la liste du terrain
 		/* L'ajout se fait directement à la création car un triangle doit être associé à un terrain. Ainsi, on à pas besoin de
 		 * méthode add dans la classe terrain et on a besoin de rien vérifier, l'attribut terrain est forcément null au départ.
 		 */
+	}
+	public TriangleTerrain(String c, PointTerrain start, PointTerrain middle, PointTerrain end) {
+		super();
+		if(start.getTerrain() != middle.getTerrain() || middle.getTerrain() != end.getTerrain()) {throw new Error("");}
+		this.terrain = start.getTerrain();
+		this.start = start;
+		this.middle = middle;
+		this.end = end;
+		this.first = new SegmentTerrain (start,middle);
+		this.second = new SegmentTerrain (middle,end);
+		this.third = new SegmentTerrain (end,start);
+		this.id = c;
+		this.terrain.getSol().add(this);
 	}
 	
 	// Get & Set
@@ -65,6 +77,14 @@ public class TriangleTerrain {
 
 	public String getId() {
 		return id;
+	}
+
+	public long getCounter() {
+		return this.counter;
+	}
+	
+	public void setCounter(long c) {
+		this.counter = c ;
 	}
 	
 	// Affichage

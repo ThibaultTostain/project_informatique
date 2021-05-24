@@ -41,7 +41,7 @@ public class NoeudSimple extends Noeud
 	
 	@Override
 	public String toString() {
-		return "NoeudSimple;"+this.getId() + ";(" + this.getAbs() + "," + this.getOrd() + ")";
+		return "NoeudSimple;"+this.getId() + ";" + this.getAbs() + ";" + this.getOrd();
 	}
 
 	// Fonctions et Procedures

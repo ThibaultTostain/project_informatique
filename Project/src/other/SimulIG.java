@@ -1,24 +1,8 @@
 package other;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import main.Barre;
-import main.Force;
-import main.Noeud;
-import main.NoeudAppui;
-import main.NoeudSimple;
-import main.PointTerrain;
-import main.Terrain;
-import main.Treilli;
-import main.TriangleTerrain;
-import main.TypeBarre;
+import java.io.*;
+import java.util.*;
+import main.*; //import tout le package main
 
 public class SimulIG
 {
@@ -33,12 +17,45 @@ public class SimulIG
 		}
 	}
 	
-	public static void ouvrirFichier(String doc){
+	public static void ouvrirFichier(String nomDocument, Terrain terrain, Treilli treilli ) {
 		try {
-			BufferedReader sauv=new BufferedReader(new FileReader("document_test.txt"));
+			BufferedReader sauv=new BufferedReader(new FileReader(nomDocument+".txt"));
 			String ligne;
+			String motSauv;
 				while((ligne=sauv.readLine())!=null) {
 					System.out.println(ligne);
+					StringTokenizer mot=new StringTokenizer(ligne, ";"); 
+					motSauv = mot.nextToken();
+					if(motSauv.equals("Terrain")) {
+						terrain.setAbsMin(Double.parseDouble(mot.nextToken()));
+						terrain.setAbsMax(Double.parseDouble(mot.nextToken()));
+						terrain.setOrdMin(Double.parseDouble(mot.nextToken()));
+						terrain.setOrdMax(Double.parseDouble(mot.nextToken()));
+					}
+					if(motSauv.equals("Triangle")) {
+						long c = Long.parseLong(mot.nextToken());
+						TriangleTerrain T1 = new TriangleTerrain(mot.nextToken(),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())));
+						T1.setCounter(c);
+						terrain.addSol(T1);
+					}
+					if(motSauv.equals("Treilli")) {
+						treilli.setId(mot.nextToken());
+					}
+					if(motSauv.equals("TypeBarre")) {
+						
+					}
+					if(motSauv.equals("AppuiDouble")) {
+						
+					}
+					if(motSauv.equals("AppuiSimple")) {
+						
+					}
+					if(motSauv.equals("NoeudSimple")) {
+						
+					}
+					if(motSauv.equals("Barre")) {
+						
+					}
 				}
 			sauv.close();
 		}
@@ -56,28 +73,23 @@ public class SimulIG
 			sauv.write("Terrain;"+terrain.getAbsMin()+";"+terrain.getAbsMax()+";"+terrain.getOrdMin()+";"+terrain.getOrdMax()+";");
 			sauv.newLine();
 			for(int i =0 ; i < sol.size() ; i++) {
-				sauv.write("Triangle;"+sol.get(i).getId()+";"+sol.get(i).getStart()+";"+sol.get(i).getMiddle()+";"+sol.get(i).getEnd()+";");
+				sauv.write("Triangle;"+sol.get(i).getCounter()+";"+sol.get(i).getId()+";"+sol.get(i).getStart()+";"+sol.get(i).getMiddle()+";"+sol.get(i).getEnd()+";");
 				sauv.newLine();
 			}
-			sauv.write("FINTRIANGLES");
+			sauv.write("Treilli;"+treilli.getId());
 			sauv.newLine();
 			for(int i = 0; i < typeList.size() ; i++) {
 				sauv.write("TypeBarre;"+typeList.get(i).getId()+";"+typeList.get(i).getCout()+";"+typeList.get(i).getLongMin()+";"+typeList.get(i).getLongMax()+";"+typeList.get(i).getResTension()+";"+typeList.get(i).getResCompression()+";");
 				sauv.newLine();
 			}
-			sauv.write("FINCATALOGUE");
-			sauv.newLine();
 			for(int i = 0 ; i < noeudList.size(); i++) {
 				sauv.write("" + noeudList.get(i));
 				sauv.newLine();
 			}
-			sauv.write("FINNOEUDS");
-			sauv.newLine();
 			for(int i = 0 ; i < barreList.size(); i++) {
 				sauv.write(""+barreList.get(i));
 				sauv.newLine();
 			}
-			sauv.write("FINBARRES");
 			sauv.close();
 		}
 		catch (IOException err) {System.out.println("Main : ecricreFichier : impossible de créer le fichier");}
@@ -557,7 +569,7 @@ public class SimulIG
 		
 		String doc = "document_test";
 		ecrireFichier(doc, ter, trei);
-		ouvrirFichier(doc);
+		ouvrirFichier(doc,ter,trei);
 		/*
 		TriangleTerrain T1 = new TriangleTerrain(new PointTerrain(ter,0,0),new PointTerrain(ter,2,0),new PointTerrain(ter,1,-1));
 		TriangleTerrain T2 = new TriangleTerrain(new PointTerrain(ter,0,0),new PointTerrain(ter,1,-1),new PointTerrain(ter,-1,-1));

@@ -31,12 +31,24 @@ public class TypeBarre {
 
 	// Get & Set
 	
+	
+	
+	// Fin
+	
 	public float getCout() {
 		return cout;
+	}
+	
+	public void setCout(float i) {
+		this.cout = i;
 	}
 
 	public double getLongMin() {
 		return longMin;
+	}
+	
+	public void setLongMin(double i) {
+		this.longMin = i;
 	}
 
 	public double getLongMax() {
