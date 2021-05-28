@@ -54,13 +54,25 @@ public class TypeBarre {
 	public double getLongMax() {
 		return longMax;
 	}
+	
+	public void setLongMax(double i) {
+		this.longMax = i;
+	}
 
 	public double getResTension() {
 		return resTension;
 	}
+	
+	public void setResTension(double i) {
+		this.resTension = i;
+	}
 
 	public double getResCompression() {
 		return resCompression;
+	}
+	
+	public void setResCompression(double i) {
+		this.resCompression = i;
 	}
 
 	public String getId() {

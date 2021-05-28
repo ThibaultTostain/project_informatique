@@ -94,8 +94,9 @@ public class SimulIG
 		}
 		catch (IOException err) {System.out.println("Main : ecricreFichier : impossible de créer le fichier");}
 	}
+	//_________________________________Treilli________________________________
 	
-	public static void affichTrei(Treilli trei) {
+	public static void afficher(Treilli trei) {
 		System.out.println("Liste noeud");
 		affich(trei.getNoeudList());
 		
@@ -105,8 +106,10 @@ public class SimulIG
 		System.out.println("\nListe type");
 		affich(trei.getTypeList());
 	}
-	public static void affichTer(Terrain ter) {
-		System.out.println("Limite du terrain");
+	//_________________________________Terrain________________________________
+	
+	public static void afficher(Terrain ter) {
+		System.out.println("\nLimite du terrain");
 		System.out.println("  Abs min : "+ter.getAbsMin());
 		System.out.println("  Abs max : "+ter.getAbsMax());
 		System.out.println("  Ord min : "+ter.getOrdMin());
@@ -116,6 +119,20 @@ public class SimulIG
 		affich(ter.getSol());
 	}
 	
+	public static void modifyTerrain(Terrain ter) {
+		double xMin,xMax,yMin,yMax;
+		System.out.println("Abs min : "); xMin = Lire.i();
+		System.out.println("Abs max : "); xMax = Lire.i();
+		System.out.println("Ord min : "); yMin = Lire.i();
+		System.out.println("Ord max : "); yMax = Lire.i();
+		
+		ter.setAbsMin(xMin);
+		ter.setAbsMax(xMax);
+		ter.setOrdMin(yMin);
+		ter.setOrdMax(yMax);
+	}
+	//______________________________Point_Terrain______________________________
+	
 	public static PointTerrain newPoint(Terrain ter) {
 		double x,y;
 		System.out.println("\nNouveau point");
@@ -123,12 +140,14 @@ public class SimulIG
 		System.out.print("Ordonnée : "); y = Lire.d();
 		return new PointTerrain(ter,x,y);
 	}
+	
 	public static void modifyPoint(PointTerrain S) {
 		double x,y;
 		System.out.print("\nNouvelle abscisse : "); x = Lire.d();
 		System.out.print("Nouvelle ordonnée : "); y = Lire.d();
 		S.setAbs(x); S.setOrd(y);
 	}
+	
 	public static PointTerrain choosePoint(TriangleTerrain tri) {
 		int num, k=0;
 		System.out.println("\nChoisir un point");
@@ -146,7 +165,20 @@ public class SimulIG
 			return tri.getEnd();
 		}
 	}
+	//_________________________________Noeud_________________________________
 	
+	public static Noeud chooseNoeud(Treilli trei) {
+		int num, k=0;
+		System.out.println("\nChoisir un noeud");
+		for(Noeud i : trei.getNoeudList()) {
+			k++;
+			System.out.println(k+" : "+i);
+		}
+		System.out.print("Votre choix : "); num = Lire.i();
+		return trei.getNoeudList().get(num-1);
+	}
+	
+	//______________________________Noeud_Simple______________________________
 	
 	public static NoeudSimple newNoeudSimple(Treilli trei) {
 		double x,y;
@@ -155,12 +187,14 @@ public class SimulIG
 		System.out.print("Ordonnée : "); y = Lire.d();
 		return new NoeudSimple(trei,x,y);
 	}
+	
 	public static void modifyNoeudSimple(NoeudSimple S) {
 		double x,y;
 		System.out.print("\nNouvelle abscisse : "); x = Lire.d();
 		System.out.print("Nouvelle ordonnée : "); y = Lire.d();
 		S.setAbs(x); S.setOrd(y);
 	}
+	
 	public static NoeudSimple chooseNoeudSimple(Treilli trei) {
 		int num, k=0;
 		System.out.println("\nChoisir un noeud");
@@ -173,17 +207,19 @@ public class SimulIG
 		System.out.print("Votre choix : "); num = Lire.i();
 		return (NoeudSimple)trei.getNoeudList().get(num-1);
 	}
+	//_________________________________Force_________________________________
 	
-	public static void modifyForce(Treilli trei) {
+	public static void modifyForce(Noeud S) {
 		double x,y;
 		System.out.print("\nEffort abscisse : "); x = Lire.d();
 		System.out.print("Effort ordonnée : "); y = Lire.d();
-		chooseNoeud(trei).setForce(new Force(x,y));
-	}
-	public static void supprForce(Treilli trei) {
-		chooseNoeud(trei).setForce(new Force(0,0));
+		S.setForce(new Force(x,y));
 	}
 	
+	public static void supprForce(Noeud S) {
+		S.setForce(new Force(0,0));
+	}
+	//________________________________Noeud_Appui______________________________
 	
 	public static NoeudAppui newAppui(Treilli trei) {
 		int num;
@@ -214,11 +250,13 @@ public class SimulIG
 			return new NoeudAppui(trei,tri.getThird(),pos,simple);
 		}
 	}
+	
 	public static void modifyAppui(NoeudAppui A) {
 		double pos;
 		System.out.println("\nNouvelle position : "); pos = Lire.d();
 		A.setPos(pos);
 	}
+	
 	public static NoeudAppui chooseAppui(Treilli trei) {
 		int num, k=0;
 		System.out.println("\nChoisir un appui");
@@ -231,7 +269,7 @@ public class SimulIG
 		System.out.print("Votre choix : "); num = Lire.i();
 		return (NoeudAppui)trei.getNoeudList().get(num-1);
 	}
-	
+	//_____________________________Triangle_Terrain____________________________
 	
 	public static TriangleTerrain chooseTriangle(Terrain ter) {
 		int num, k=0;
@@ -243,17 +281,7 @@ public class SimulIG
 		System.out.print("Votre choix : "); num = Lire.i();
 		return ter.getSol().get(num-1);
 	}
-	
-	public static Noeud chooseNoeud(Treilli trei) {
-		int num, k=0;
-		System.out.println("\nChoisir un noeud");
-		for(Noeud i : trei.getNoeudList()) {
-			k++;
-			System.out.println(k+" : "+i);
-		}
-		System.out.print("Votre choix : "); num = Lire.i();
-		return trei.getNoeudList().get(num-1);
-	}
+	//________________________________Type_Barre______________________________
 	
 	public static TypeBarre newType() {
 		double lMin, lMax, tens, comp;
@@ -279,6 +307,24 @@ public class SimulIG
 		return TypeBarre.list.get(num-1);
 	}
 	
+	public static void modifyType(TypeBarre type) {
+		double lMin, lMax, tens, comp;
+		float cout;
+		
+		System.out.println("\nLongueure min : "); lMin = Lire.d();
+		System.out.println("Longueure max : "); lMax = Lire.d();
+		System.out.println("Tension max : "); tens = Lire.d();
+		System.out.println("Compression max : "); comp = Lire.d();
+		System.out.println("Cout au metre : "); cout = Lire.f();
+		
+		type.setLongMin(lMin);
+		type.setLongMax(lMax);
+		type.setResTension(tens);
+		type.setResCompression(comp);
+		type.setCout(cout);
+	}
+	//___________________________________Barre_________________________________
+	
 	public static Barre chooseBarre(Treilli trei) {
 		int num, k=0;
 		System.out.println("\nChoisir un type");
@@ -289,11 +335,10 @@ public class SimulIG
 		System.out.print("Votre choix : "); num = Lire.i();
 		return trei.getBarreList().get(num-1);
 	}
-	
-	//________________________________________________________________
+	//_________________________________________________________________________
 	
 	public static void SimIG() {
-		int t;
+		int choix;
 		boolean stop = false;
 		
 		Terrain ter = new Terrain(-10, 10, -10, 10);
@@ -308,8 +353,8 @@ public class SimulIG
 		while(!stop) {
 			System.out.println("\n____________________MENU____________________");
 			System.out.print("\n");
-			System.out.println("1 : Afficher les éléments du treillis");
-			System.out.println("2 : Afficher les éléments du terrain");
+			System.out.println("1 : Treillis");
+			System.out.println("2 : Terrain");
 			System.out.println("3 : Triangle de terrain");
 			System.out.println("4 : Noeud");
 			System.out.println("5 : Barre");
@@ -317,22 +362,41 @@ public class SimulIG
 			System.out.println("7 : Calculer");
 			System.out.println("0 : Quitter");
 			System.out.print("Votre Choix : ");
-			t = Lire.i();
+			choix = Lire.i();
 			
-			if(t == 0) {stop = true;}
+			if(choix == 0) {stop = true;}
 		
-			switch(t) {
-			case 0:
+			switch(choix) {
+			default:
 				break;
 			case 1:
 				System.out.println("\n___________________TREILLI___________________");
 				System.out.print("\n");
-				affichTrei(trei);
+				afficher(trei);
 				break;
 			case 2:
 				System.out.println("\n___________________TERRAIN___________________");
 				System.out.print("\n");
-				affichTer(ter);
+				System.out.println("1 : Modifier les limites du terrain");
+				System.out.println("2 : Afficher les éléments du terrain");
+				System.out.println("0 : Revenir au menu");
+				System.out.print("Votre Choix : ");
+				choix = Lire.i();
+				
+				switch(choix) {
+				default:
+					break;
+				case 1:
+					try {
+						modifyTerrain(ter);
+					} catch(java.lang.IndexOutOfBoundsException e) {
+						
+					}
+					break;
+				case 2:
+					afficher(ter);
+					break;
+				}
 				break;
 			case 3:
 				System.out.println("\n__________________TRIANGLE__________________");
@@ -342,16 +406,24 @@ public class SimulIG
 				System.out.println("3 : Supprimer un triangle");
 				System.out.println("0 : Revenir au menu");
 				System.out.print("Votre Choix : ");
-				t = Lire.i();
+				choix = Lire.i();
 				
-				switch(t) {
-				case 0:
+				switch(choix) {
+				default:
 					break;
 				case 1:
-					new TriangleTerrain(newPoint(ter),newPoint(ter),newPoint(ter));
+					try {
+						new TriangleTerrain(newPoint(ter),newPoint(ter),newPoint(ter));
+					} catch(java.lang.IndexOutOfBoundsException e) {
+						
+					}
 					break;
 				case 2:
-					modifyPoint(choosePoint(chooseTriangle(ter)));
+					try {
+						modifyPoint(choosePoint(chooseTriangle(ter)));
+					} catch(java.lang.IndexOutOfBoundsException e) {
+						
+					}
 					break;
 				case 3:
 					
@@ -367,22 +439,34 @@ public class SimulIG
 				System.out.println("4 : Supprimer un noeud");
 				System.out.println("0 : Revenir au menu");
 				System.out.print("Votre Choix : ");
-				t = Lire.i();
+				choix = Lire.i();
 				
-				switch(t) {
-				case 0:
+				switch(choix) {
+				default:
 					break;
 				case 1:
 					newAppui(trei);
 					break;
 				case 2:
-					modifyNoeudSimple(chooseNoeudSimple(trei));
+					try {
+						modifyNoeudSimple(chooseNoeudSimple(trei));
+					} catch(java.lang.IndexOutOfBoundsException e) {
+					
+					}
 					break;
 				case 3:
-					modifyAppui(chooseAppui(trei));
+					try {
+						modifyAppui(chooseAppui(trei));
+					} catch(java.lang.IndexOutOfBoundsException e) {
+					
+					}
 					break;
 				case 4:
-					chooseNoeud(trei).delete();
+					try {
+						chooseNoeud(trei).delete();
+					} catch(java.lang.IndexOutOfBoundsException e) {
+						
+					}
 					break;
 				}
 				break;
@@ -393,26 +477,45 @@ public class SimulIG
 				System.out.println("2 : Créer une barre entre deux noeuds existants");
 				System.out.println("3 : Supprimer une barre");
 				System.out.println("4 : Créer un nouveau type");
+				System.out.println("5 : Modifier un type");
+				
 				System.out.println("0 : Revenir au menu");
 				System.out.print("Votre Choix : ");
-				t = Lire.i();
+				choix = Lire.i();
 				
-				switch(t) {
-				case 0:
+				switch(choix) {
+				default:
 					break;
 				case 1:
-					if(trei.getNoeudList().size() == 0) {System.out.println("\nVous devez d'abord construire un appui");}
-					else {new Barre(chooseNoeud(trei),newNoeudSimple(trei), chooseType());}
+					try {
+						new Barre(chooseNoeud(trei),newNoeudSimple(trei), chooseType());
+					} catch(java.lang.IndexOutOfBoundsException e) {
+						
+					}
 					break;
 				case 2:
-					new Barre(chooseNoeud(trei), chooseNoeud(trei), chooseType());
+					try {
+						new Barre(chooseNoeud(trei), chooseNoeud(trei), chooseType());
+					} catch(java.lang.IndexOutOfBoundsException e) {
+						
+					}
 					break;
 				case 3:
-					chooseBarre(trei).delete();
+					try {
+						chooseBarre(trei).delete();
+					} catch(java.lang.IndexOutOfBoundsException e) {
+						
+					}
 					break;
 				case 4:
 					newType();
 					break;
+				case 5:
+					try {
+						modifyType(chooseType());
+					} catch(java.lang.IndexOutOfBoundsException e) {
+						
+					}
 				}
 				break;
 			case 6:
@@ -422,16 +525,16 @@ public class SimulIG
 				System.out.println("2 : Supprimer une force sur un noeud");
 				System.out.println("0 : Retour au menu");
 				System.out.print("Votre Choix : ");
-				t = Lire.i();
+				choix = Lire.i();
 				
-				switch(t) {
-				case 0:
+				switch(choix) {
+				default:
 					break;
 				case 1:
-					modifyForce(trei);
+					modifyForce(chooseNoeud(trei));
 					break;
 				case 2:
-					supprForce(trei);
+					supprForce(chooseNoeud(trei));
 					break;
 				}
 			break;
@@ -532,8 +635,8 @@ public class SimulIG
 		l.contains(null);
 		Matrice m = new Matrice(l.toArray());
 		*/
-		//SimIG();
-		
+		SimIG();
+		/*
 		Terrain ter = new Terrain(-10, 10, -10, 10);
 		Treilli trei = new Treilli(ter);
 		
