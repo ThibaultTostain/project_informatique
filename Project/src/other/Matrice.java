@@ -368,11 +368,7 @@ public class Matrice
         return res;
     }
 	
-	public void diagonalisation () {
-		//On vérifie que aucun pivot = 0
-		Matrice res = this.concatCol(identite(this.getNbrLig()));
-		
-		//Création du triangle supérieur
+	public void diagonale(Matrice res) {
 		
 		for(int i = 0; i < Math.min(res.getNbrLig(),res.getNbrCol()/2);i++) {
 			System.out.println("i= "+i);
@@ -407,16 +403,32 @@ public class Matrice
 
 		System.out.println("Triangle supérieur");
 		System.out.println(res);
+	}
+	
+	public void diagonalisation () {
+		//On vérifie que aucun pivot = 0
+		Matrice res = this.concatCol(identite(this.getNbrLig()));
+		
+		//Création du triangle supérieur
+		
+		diagonale(res);
+		
+		for(int i = 0; i < Math.min(res.getNbrLig(),res.getNbrCol()/2);i++) {
+			for(int n = i+1; n<res.getNbrLig();n++ ) {res.transvection(i, n);}
+		}
+
+		System.out.println("Triangle supérieur");
+		System.out.println(res);
 			
 		//Diagonalisation
-			
+		/*	
 		for(int i = Math.min(res.getNbrLig(),res.getNbrCol()/2)-1 ; i>=0 ; i--) {
 			for(int n = i-1; n>=0;n-- ) {res.transvection(i, n);} 
 		}
 
 		System.out.println("Diagonalier");
 		System.out.println(res);
-		
+		*/
 		// Clarifier la diagonale (=1)
 
 		for(int n = 0; n < Math.min(res.getNbrLig(),res.getNbrCol()/2);n++) {
@@ -438,7 +450,7 @@ public class Matrice
 	
 	public static void main (String args[])
 	{
-		/*double[][] tabl = new double[][]{
+		double[][] tabl = new double[][]{
 			{+7.07E-01 , +0.00E+00 , +0.00E+00 , +1.00E+00 , +0.00E+00 , +0.00E+00},
 			{-7.07E-01 , +0.00E+00 , -1.00E+00 , +0.00E+00 , +1.00E+00 , +0.00E+00},
 			{+0.00E+00 , +7.07E-01 , +0.00E+00 , +0.00E+00 , +0.00E+00 , +1.00E+00},
@@ -461,7 +473,7 @@ public class Matrice
         System.out.println("Matrice diagonalisée : ");
         m.diagonalisation();
         m=m.mult(m2);
-        System.out.println(m);*/
+        System.out.println(m);
 	}
 	
 	
