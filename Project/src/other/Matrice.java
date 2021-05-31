@@ -320,11 +320,11 @@ public class Matrice
 		int res = c;
 		double max = Math.abs(this.get(c, c));
 		for(int i = 0 ; i < this.getNbrCol()/2; i++){
-			System.out.println("i="+i);
+			//System.out.println("i="+i);
 			if(Math.abs(this.get(i, c)) > max){
 				max = Math.abs(this.get(i, c));
 				res = i;
-				System.out.println("max = "+max+"res = "+res+"c="+c);
+				//System.out.println("max = "+max+"res = "+res+"c="+c);
 				}
 		}
 		if(max <= 1E-8){
@@ -339,13 +339,13 @@ public class Matrice
             throw new Error("Matrice : .ligPlusGrandPivot() : indice incompatible");
         }
 		int res = c;
-		System.out.println("Entré dans PivotE c="+c+"n="+n);
+		//System.out.println("Entré dans PivotE c="+c+"n="+n);
 		double max = 0;
 		for(int i = this.getNbrCol()/2-1 ; i >=0 ; i--){
-			System.out.println("i="+i);
+			//System.out.println("i="+i);
 			if(Math.abs(this.get(i, c)) > max && i != c ){
 				max = Math.abs(this.get(i, c));
-				System.out.println("i="+i+"c="+c+"max="+max);
+				//System.out.println("i="+i+"c="+c+"max="+max);
 				res = i;
 			}
 		}
@@ -370,39 +370,32 @@ public class Matrice
 	
 	public void diagonale(Matrice res) {
 		
-		for(int i = 0; i < Math.min(res.getNbrLig(),res.getNbrCol()/2);i++) {
-			System.out.println("i= "+i);
-			if (res.get(i,i) == 0){
-				System.out.println("res.get(i,i) == 0");
-				if (res.ligPlusGrandPivotInf(i) == -1) {
-					System.out.println("Debug : ligPlusGrandPivotInf(i) == -1");
-					if (res.ligPlusGrandPivotSup(i) == -1) {
-			            throw new Error("Matrice : .diagonalisation() : matrice irréductible");
+		for(int i = 0; i < Math.min(res.getNbrLig(),res.getNbrCol()/2);i++) { // parcours la moitié gauche de la matrice, soit toute la matrice que l'on veut diagonaliser
+			System.out.println("i= "+i); // debug
+			if (res.get(i,i) == 0){ // si la diagonale vaut zéro
+				//System.out.println("res.get(i,i) == 0"); // debug
+				if (res.ligPlusGrandPivotInf(i) == -1) { // s'il n'y a pas de pivot possible en dessous
+					//System.out.println("Debug : ligPlusGrandPivotInf(i) == -1"); // debug
+					if (res.ligPlusGrandPivotSup(i) == -1) { // s'il n'y a pas de pivot possible au dessus
+			            throw new Error("Matrice : .diagonalisation() : matrice irréductible"); // error
 			        }
-					System.out.println("Debug : ligPlusGrandPivotSup(i) != -1");
-					if (res.ligPlusGrandPivotE(res.ligPlusGrandPivotSup(i),i) == -1) {
-			            throw new Error("Matrice : .diagonalisation() : matrice irréductible");
+					//System.out.println("Debug : ligPlusGrandPivotSup(i) != -1"); // debug
+					if (res.ligPlusGrandPivotE(res.ligPlusGrandPivotSup(i),i) == -1) { // vérifie que le pivot supérieur n'oblige pas un zéro plus haut dans la diagonale
+			            throw new Error("Matrice : .diagonalisation() : matrice irréductible"); // error
 			        }
-					System.out.println("Debug : ligPlusGrandPivotE(ligPlusGrandPivotSup(i),i) != -1");
-					int s=res.ligPlusGrandPivotSup(i);
-					int q=res.ligPlusGrandPivotE(res.ligPlusGrandPivotSup(i),i);
-					System.out.println("Debug : i = " + i + " s = " + s +" q = " + q + " ligPlusGrandPivotSup(i) = " +res.ligPlusGrandPivotSup(i));
-					res.permutLig(i,res.ligPlusGrandPivotSup(i)); // On met pivot != 0
-					res.permutLig(s,q);
+					//System.out.println("Debug : ligPlusGrandPivotE(ligPlusGrandPivotSup(i),i) != -1"); // debug
+					int s=res.ligPlusGrandPivotSup(i); // mise en mémoire de quelle ligne il faut échanger
+					int q=res.ligPlusGrandPivotE(res.ligPlusGrandPivotSup(i),i); // mise en mémoire de quelle ligne il faut échanger
+					//System.out.println("Debug : i = " + i + " s = " + s +" q = " + q + " ligPlusGrandPivotSup(i) = " +res.ligPlusGrandPivotSup(i)); // debug
+					res.permutLig(i,res.ligPlusGrandPivotSup(i)); // On met le pivot != 0
+					res.permutLig(s,q); // On met le pivot != 0 pour la ligne que l'on vient de modifier
 				} else {
-					System.out.println("Debug : ligPlusGrandPivotInf(i) != -1");
-					res.permutLig(i,ligPlusGrandPivotInf(i)); // On met pivot != 0 
+					//System.out.println("Debug : ligPlusGrandPivotInf(i) != -1"); //
+					res.permutLig(i,ligPlusGrandPivotInf(i)); // On met le pivot != 0 
 				}
 			}
-			System.out.println(res);
+			System.out.println(res); // debug
 		}
-		
-		for(int i = 0; i < Math.min(res.getNbrLig(),res.getNbrCol()/2);i++) {
-			for(int n = i+1; n<res.getNbrLig();n++ ) {res.transvection(i, n);}
-		}
-
-		System.out.println("Triangle supérieur");
-		System.out.println(res);
 	}
 	
 	public void diagonalisation () {
@@ -413,22 +406,15 @@ public class Matrice
 		
 		diagonale(res);
 		
-		for(int i = 0; i < Math.min(res.getNbrLig(),res.getNbrCol()/2);i++) {
-			for(int n = i+1; n<res.getNbrLig();n++ ) {res.transvection(i, n);}
+		// Mettre à zéro un triangle
+		
+		for(int i = 0; i < Math.min(res.getNbrLig(),res.getNbrCol()/2);i++) { // on parcours la partie gauche de la matrice
+			for(int n = i+1; n<res.getNbrLig();n++ ) {res.transvection(i, n);} // on met à zéro le triangle sous la diagonale
 		}
 
-		System.out.println("Triangle supérieur");
-		System.out.println(res);
+		System.out.println("Triangle supérieur"); // debug
+		System.out.println(res); // debug
 			
-		//Diagonalisation
-		/*	
-		for(int i = Math.min(res.getNbrLig(),res.getNbrCol()/2)-1 ; i>=0 ; i--) {
-			for(int n = i-1; n>=0;n-- ) {res.transvection(i, n);} 
-		}
-
-		System.out.println("Diagonalier");
-		System.out.println(res);
-		*/
 		// Clarifier la diagonale (=1)
 
 		for(int n = 0; n < Math.min(res.getNbrLig(),res.getNbrCol()/2);n++) {
@@ -439,8 +425,27 @@ public class Matrice
 				res.set(n, i, (res.get(n,i)/q));
 			}
 		}
-		System.out.println("Mise de la diagonale à 1");
+		System.out.println("===== Mise de la diagonale à 1 =====");
 		System.out.println(res);
+		
+		diagonale(res);
+		
+		System.out.println("===== Vérification de la diagonale =====");
+		System.out.println(res);
+		
+		for(int i = 0; i < res.getNbrLig()-1;i++) { // pour toutes les lignes
+			for(int n = 0 ; n<res.getNbrCol()/2;n++ ) { // et toutes les colonnes gauches
+				if(res.get(i, n)!=0 & i!=n) {// si le coef n'est pas zéro et n'est pas sur la diagonale
+					double temp = res.get(i, n); // alors garder ce coef dans "temp"
+					for (int p =0 ; p<res.getNbrCol(); p++) { // et pour toutes les colonnes
+						res.set(i, p, res.get(i, p) - (res.get(i+1, p) * temp)); // faire la ligne du dessus moins "temp" fois la ligne du dessous
+					}
+				}
+			} // on met à zéro le triangle sous la diagonale
+		}
+		System.out.println("===== mise à zéro du triangle sup =====");
+		System.out.println(res);
+		
 		res = res.subCol(res.getNbrCol()/2,res.getNbrCol()-1);
 		System.out.println("Résultat");
 		System.out.println(res);
