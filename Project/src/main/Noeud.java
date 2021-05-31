@@ -24,6 +24,14 @@ public abstract class Noeud { // On n'utilise pas Noeud en tant que tel, cela pe
 		treilli.getNoeudList().add(this);
 	}
 	
+	public Noeud(String id,Treilli treilli) {
+		super();
+		this.treilli = treilli;
+		this.force = new Force(0,0); // Force inexistante initialement
+		this.ramifi = new ArrayList<Barre>();
+		this.id = id;
+	}
+	
 	// Get & Set
 	
 	public Force getForce() {

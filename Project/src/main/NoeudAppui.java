@@ -23,6 +23,15 @@ public class NoeudAppui extends Noeud {
 		if(pos < 0 || pos > 1) {throw new Error("Position mismatch");}
 		this.pos = pos;
 	}
+	
+	public NoeudAppui(String id, Treilli treilli, SegmentTerrain seg, double pos, boolean simple) {
+		// constructeur pour la sauvegarde
+		super(id,treilli);
+		this.seg = seg;
+		this.simple = simple;
+		if(pos < 0 || pos > 1) {throw new Error("Position mismatch");}
+		this.pos = pos;
+	}
 
 	// Get & Set
 	

@@ -28,6 +28,14 @@ public class Treilli {
 
 	// Get & Set
 	
+	public long getCount() {
+		return this.counter;
+	}
+	
+	public void setCount(long n) {
+		this.counter = n;
+	}
+	
 	public String getId() {
 		return this.id;
 	}

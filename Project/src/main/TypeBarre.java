@@ -79,6 +79,14 @@ public class TypeBarre {
 		return id;
 	}
 	
+	public long getCount() {
+		return this.counter;
+	}
+	
+	public void setCount(long n) {
+		this.counter=n;
+	}
+	
 	@Override
 	public String toString() {
 		return id;

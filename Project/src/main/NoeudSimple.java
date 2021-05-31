@@ -9,9 +9,16 @@ public class NoeudSimple extends Noeud
 	private double ord;
 	
 	// Constructeurs
-	
+
 	public NoeudSimple(Treilli treilli, double abs, double ord) {
 		super(treilli);
+		this.abs = abs;
+		this.ord = ord;
+		this.control();
+	}
+	
+	public NoeudSimple(String id,Treilli treilli, double abs, double ord) {
+		super(id,treilli);
 		this.abs = abs;
 		this.ord = ord;
 		this.control();

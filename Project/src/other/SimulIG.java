@@ -26,35 +26,47 @@ public class SimulIG
 					System.out.println(ligne);
 					StringTokenizer mot=new StringTokenizer(ligne, ";"); 
 					motSauv = mot.nextToken();
-					if(motSauv.equals("Terrain")) {
-						terrain.setAbsMin(Double.parseDouble(mot.nextToken()));
-						terrain.setAbsMax(Double.parseDouble(mot.nextToken()));
-						terrain.setOrdMin(Double.parseDouble(mot.nextToken()));
-						terrain.setOrdMax(Double.parseDouble(mot.nextToken()));
-					}
-					if(motSauv.equals("Triangle")) {
-						long c = Long.parseLong(mot.nextToken());
-						TriangleTerrain T1 = new TriangleTerrain(mot.nextToken(),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())));
-						T1.setCounter(c);
-						terrain.addSol(T1);
-					}
-					if(motSauv.equals("Treilli")) {
-						treilli.setId(mot.nextToken());
-					}
-					if(motSauv.equals("TypeBarre")) {
-						
-					}
-					if(motSauv.equals("AppuiDouble")) {
-						
-					}
-					if(motSauv.equals("AppuiSimple")) {
-						
-					}
-					if(motSauv.equals("NoeudSimple")) {
-						
-					}
-					if(motSauv.equals("Barre")) {
-						
+					switch(motSauv) {
+						case ("Terrain"):
+							// set les coordonnées du terrain
+							terrain.setAbsMin(Double.parseDouble(mot.nextToken()));
+							terrain.setAbsMax(Double.parseDouble(mot.nextToken()));
+							terrain.setOrdMin(Double.parseDouble(mot.nextToken()));
+							terrain.setOrdMax(Double.parseDouble(mot.nextToken()));
+							break; // permet de quitter tout le switch comme une ligne ne remplie qu'un élément
+						case ("Triangle"):
+							// créer le triangle terrain
+							// affecter le counter à la valeur du counter lors de la sauvegarde
+							//Ajouter le nouveau triangle au terrain déjà créé
+							TriangleTerrain T1 = new TriangleTerrain(mot.nextToken(),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())));
+							T1.setCounter(Long.parseLong(mot.nextToken()));
+							terrain.addSol(T1);
+							break;
+						case ("Treilli"):
+							// set l'id du treilli puis le count dans son état lors de la sauvegarde
+							treilli.setId(mot.nextToken());
+							treilli.setCount(Long.parseLong(mot.nextToken()));
+							break;
+						case ("TypeBarre"):
+							// Créer un nouveau type de barre et le mettre dans la liste des types de barres du treilli
+							// Mettre le counter id des types de barres au dernier chiffre sauvegardé
+							treilli.getTypeList().add(new TypeBarre(Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()), Float.parseFloat(mot.nextToken())));
+							treilli.getTypeList().get(0).setCount(Long.parseLong(mot.nextToken()));
+							break;
+						case ("AppuiDouble"):
+							treilli.getNoeudList().add(new NoeudAppui(mot.nextToken(),treilli,new SegmentTerrain(new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()))),Double.parseDouble(mot.nextToken()),false));
+							break;
+						case ("AppuiSimple"):
+							treilli.getNoeudList().add(new NoeudAppui(mot.nextToken(),treilli,new SegmentTerrain(new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()))),Double.parseDouble(mot.nextToken()),true));
+							break;
+						case ("NoeudSimple"):
+							treilli.getNoeudList().add(new NoeudSimple(mot.nextToken(),treilli,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())));
+							break;
+						case ("Barre"):
+							treilli.getBarreList().add(null);
+							break;
+						default : // optionel pour le switch mais permet de me prévenir si aucun cas c'est arrivé
+							System.out.println("SimullG : ouvrirFichier() : une ligne n'a pas de correspondance");
 					}
 				}
 			sauv.close();
@@ -70,20 +82,20 @@ public class SimulIG
 			List<Barre> barreList = treilli.getBarreList();
 			List<TypeBarre> typeList = treilli.getTypeList();
 			List<TriangleTerrain> sol = terrain.getSol();
-			sauv.write("Terrain;"+terrain.getAbsMin()+";"+terrain.getAbsMax()+";"+terrain.getOrdMin()+";"+terrain.getOrdMax()+";");
+			sauv.write("Terrain;"+terrain.getAbsMin()+";"+terrain.getAbsMax()+";"+terrain.getOrdMin()+";"+terrain.getOrdMax());
 			sauv.newLine();
 			for(int i =0 ; i < sol.size() ; i++) {
-				sauv.write("Triangle;"+sol.get(i).getCounter()+";"+sol.get(i).getId()+";"+sol.get(i).getStart()+";"+sol.get(i).getMiddle()+";"+sol.get(i).getEnd()+";");
+				sauv.write("Triangle;"+sol.get(i).getId()+";"+sol.get(i).getStart()+";"+sol.get(i).getMiddle()+";"+sol.get(i).getEnd()+";"+sol.get(i).getCounter());
 				sauv.newLine();
 			}
-			sauv.write("Treilli;"+treilli.getId());
+			sauv.write("Treilli;"+treilli.getId()+";"+treilli.getCount());
 			sauv.newLine();
 			for(int i = 0; i < typeList.size() ; i++) {
-				sauv.write("TypeBarre;"+typeList.get(i).getId()+";"+typeList.get(i).getCout()+";"+typeList.get(i).getLongMin()+";"+typeList.get(i).getLongMax()+";"+typeList.get(i).getResTension()+";"+typeList.get(i).getResCompression()+";");
+				sauv.write("TypeBarre;"+typeList.get(i).getLongMin()+";"+typeList.get(i).getLongMax()+";"+typeList.get(i).getResTension()+";"+typeList.get(i).getResCompression()+";"+typeList.get(i).getCout()+";"+typeList.get(i).getCount()+";"+typeList.get(i).getId());
 				sauv.newLine();
 			}
 			for(int i = 0 ; i < noeudList.size(); i++) {
-				sauv.write("" + noeudList.get(i));
+				sauv.write(""+noeudList.get(i));
 				sauv.newLine();
 			}
 			for(int i = 0 ; i < barreList.size(); i++) {
