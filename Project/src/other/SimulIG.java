@@ -22,6 +22,7 @@ public class SimulIG
 		try {
 			BufferedReader sauv=new BufferedReader(new FileReader(nomDocument+".txt"));
 			String ligne;
+			long l=0; // variable pour le counter des noeuds
 			// On vide l'environnement de travail pour éviter d'avoir des traces de l'ancien treilli.
 			treilli.getTypeList().clear();
 			treilli.getBarreList().clear();
@@ -46,7 +47,6 @@ public class SimulIG
 							//Ajouter le nouveau triangle au terrain déjà créé
 							TriangleTerrain T1 = new TriangleTerrain(mot.nextToken(),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())));
 							T1.setCounter(Long.parseLong(mot.nextToken()));
-							terrain.addSol(T1);
 							break;
 						case ("Treilli"):
 							// set l'id du treilli puis le count dans son état lors de la sauvegarde
@@ -61,22 +61,19 @@ public class SimulIG
 							break;
 						case ("AppuiDouble"):
 							String tamponD = mot.nextToken();
-							long d = 0;
-							if (Long.parseLong(tamponD.substring(1,tamponD.length())) > d) {d = Long.parseLong(tamponD.substring(1,tamponD.length()));}
-							treilli.getNoeudList().add(new NoeudAppui(d,tamponD,treilli,new SegmentTerrain(new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()))),Double.parseDouble(mot.nextToken()),false));
+							if (Long.parseLong(tamponD.substring(1,tamponD.length())) > l) {l = Long.parseLong(tamponD.substring(1,tamponD.length()));}
+							treilli.getNoeudList().add(new NoeudAppui(l,tamponD,treilli,new SegmentTerrain(new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()))),Double.parseDouble(mot.nextToken()),false));
 							treilli.getNoeudList().get(0);
 							break;
 						case ("AppuiSimple"):
 							String tamponS = mot.nextToken();
-							long s = 0;
-							if (Long.parseLong(tamponS.substring(1,tamponS.length())) > s) {s = Long.parseLong(tamponS.substring(1,tamponS.length()));}
-							treilli.getNoeudList().add(new NoeudAppui(s,tamponS,treilli,new SegmentTerrain(new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()))),Double.parseDouble(mot.nextToken()),true));
+							if (Long.parseLong(tamponS.substring(1,tamponS.length())) > l) {l = Long.parseLong(tamponS.substring(1,tamponS.length()));}
+							treilli.getNoeudList().add(new NoeudAppui(l,tamponS,treilli,new SegmentTerrain(new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()))),Double.parseDouble(mot.nextToken()),true));
 							break;
 						case ("NoeudSimple"):
 							String tamponN = mot.nextToken();
-							long n = 0;
-							if (Long.parseLong(tamponN.substring(1,tamponN.length())) > n) {n = Long.parseLong(tamponN.substring(1,tamponN.length()));}
-							treilli.getNoeudList().add(new NoeudSimple(n,tamponN,treilli,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())));
+							if (Long.parseLong(tamponN.substring(1,tamponN.length())) > l) {l = Long.parseLong(tamponN.substring(1,tamponN.length()));}
+							treilli.getNoeudList().add(new NoeudSimple(l,tamponN,treilli,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())));
 							break;
 						case ("Barre"): 
 							String noeudA = mot.nextToken();
@@ -123,6 +120,7 @@ public class SimulIG
 			for(int i =0 ; i < sol.size() ; i++) {
 				sauv.write("Triangle;"+sol.get(i).getId()+";"+sol.get(i).getStart()+";"+sol.get(i).getMiddle()+";"+sol.get(i).getEnd()+";"+sol.get(i).getCounter());
 				sauv.newLine();
+				System.out.println(sol.get(i).getId());
 			}
 			sauv.write("Treilli;"+treilli.getId()+";"+treilli.getCount());
 			sauv.newLine();
