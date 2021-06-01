@@ -748,62 +748,6 @@ public class SimulIG
 		
 		String doc = "document_test";
 		ecrireFichier(doc, ter, trei);
-		ouvrirFichier(doc,ter,trei);
-		/*
-		TriangleTerrain T1 = new TriangleTerrain(new PointTerrain(ter,0,0),new PointTerrain(ter,2,0),new PointTerrain(ter,1,-1));
-		TriangleTerrain T2 = new TriangleTerrain(new PointTerrain(ter,0,0),new PointTerrain(ter,1,-1),new PointTerrain(ter,-1,-1));
-		TriangleTerrain T3 = new TriangleTerrain(new PointTerrain(ter,0,0),new PointTerrain(ter,1,-1),new PointTerrain(ter,-2,0));
-		
-		NoeudSimple S1 = new NoeudSimple(trei,0,2);
-		NoeudSimple S2 = new NoeudSimple(trei,0,0);
-		NoeudSimple S3 = new NoeudSimple(trei,1,1);
-		
-		
-		
-		Barre B1 = new Barre(S1,S3,TypeBarre.ACIER);
-		Barre B2 = new Barre(S3,S2,TypeBarre.ACIER);
-		Barre B3 = new Barre(S2,S1,TypeBarre.BOIS);
-		
-		
-		//System.out.println(B3.angle(S2));
-		
-		
-		
-		/*
-		
-		
-		
-		
-		//System.out.println(NoeudSimple.angle(S, a, c));
-		
-
-		//System.out.println(S.pos(new SegmentTerrain(a,b)));
-		//System.out.println(S.pos(new SegmentTerrain(b,c)));
-		//System.out.println(S.pos(new SegmentTerrain(c,d)));
-		
-		double alpha = 0.5;
-		//Noeud A = new NoeudAppui();
-		
-		//System.out.println(A);
-		
-		/*
-		
-		SegmentTerrain seg = new SegmentTerrain (b, c);
-		
-		PointTerrain p1, p2, p3, p4;
-		
-		p1 = new PointTerrain (0, 0);
-		p2 = new PointTerrain (2, 1);
-		p3 = new PointTerrain (3, 4);
-		p4 = new PointTerrain (-2, 1);
-
-		
-		System.out.println(p1.getNum());
-		System.out.println(p2.getNum());
-		System.out.println(p3.getNum());
-		System.out.println(p4.getNum());
-		*/
-		
-		
+		ouvrirFichier(doc,ter,trei);*/
 	}
 }

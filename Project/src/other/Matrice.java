@@ -455,7 +455,11 @@ public class Matrice
 	
 	public static void main (String args[])
 	{
-		double[][] tabl = new double[][]{
+		/*
+		 
+		 // test du calcul avec la matrice exemple du cours
+		 
+		 double[][] tabl = new double[][]{
 			{+7.07E-01 , +0.00E+00 , +0.00E+00 , +1.00E+00 , +0.00E+00 , +0.00E+00},
 			{-7.07E-01 , +0.00E+00 , -1.00E+00 , +0.00E+00 , +1.00E+00 , +0.00E+00},
 			{+0.00E+00 , +7.07E-01 , +0.00E+00 , +0.00E+00 , +0.00E+00 , +1.00E+00},
@@ -478,72 +482,6 @@ public class Matrice
         System.out.println("Matrice diagonalisée : ");
         m.diagonalisation();
         m=m.mult(m2);
-        System.out.println(m);
+        System.out.println(m);*/
 	}
-	
-	
-	/*
-	public void organiser (List<Double> V, List<String> I) {
-		double max;
-		int ligne;
-		for(int c = 0; c < getNbrCol()-1; c++) { // La dernière ligne ne plus plus être bougée, les autres étants classés
-			max = this.get(c, c);
-			ligne = c;
-			for(int l = c; l < getNbrLig(); l++) {
-				if(Math.abs(get(l, c)) > max) {
-					max = Math.abs(get(l, c));
-					ligne = l;
-				}
-			}
-			if(max == 0) {throw new Error("Pivot non nul introuvable");}
-			permutLig(c, ligne);
-			permutDouble(V,c,ligne);
-			permutString(I,c,ligne);
-		}
-	}
-	public static void permutDouble (List<Double> l, int pos1, int pos2) {
-		double var = l.get(pos1);
-		l.set(pos1, l.get(pos2));
-		l.set(pos2, var);
-	}
-	public void permutString (List<String> l, int pos1, int pos2) {
-		String var = l.get(pos1);
-		l.set(pos1, l.get(pos2));
-		l.set(pos2, var);
-	}
-	public void echelonner (List<Double> V) {
-		double var;
-		for(int it = 1; it < getNbrLig(); it++) { // triangle inf
-			for(int l = it; l < getNbrLig(); l++) {
-				if(get(it-1, it-1) == 0) {throw new Error("Pivot nul");}
-				var = (get(l, it-1)/get(it-1, it-1));
-				for(int c = 0; c < getNbrCol(); c++) {
-					set(l, c, get(l, c) - var*get(it-1, c));
-				}
-				V.set(l, V.get(l) - var*V.get(it-1));
-			}
-		}
-		for(int it = getNbrLig()-2; it >= 0; it--) { // triangle sup
-			for(int l = it; l >= 0; l--) {
-				if(get(it+1, it+1) == 0) {throw new Error("Pivot nul");}
-				var = (get(l, it+1)/get(it+1, it+1));
-				for(int c = 0; c < getNbrCol(); c++) {
-					set(l, c, get(l, c) - var*get(it+1, c));
-				}
-				V.set(l, V.get(l) - var*V.get(it+1));
-			}
-		}
-	}
-	public void reduire (List<Double> V) {
-		double var;
-		for(int l = 0; l < getNbrLig(); l++) { // diagonale
-			var = (1/get(l, l));
-			for(int c = 0; c < getNbrCol(); c++) {
-				set(l, c, get(l, c)*var);
-			}
-			V.set(l, V.get(l)*var);
-		}
-	}
-	
-	 */
 }
