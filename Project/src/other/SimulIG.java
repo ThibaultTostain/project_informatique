@@ -19,6 +19,7 @@ public class SimulIG
 	}
 	
 	public static void ouvrirFichier(String nomDocument, Terrain terrain, Treilli treilli ) {
+		// Systeme d'ouverture de fichier
 		try {
 			BufferedReader sauv=new BufferedReader(new FileReader(nomDocument+".txt"));
 			String ligne;
