@@ -24,9 +24,9 @@ public class NoeudAppui extends Noeud {
 		this.pos = pos;
 	}
 	
-	public NoeudAppui(String id, Treilli treilli, SegmentTerrain seg, double pos, boolean simple) {
+	public NoeudAppui(long c,String id, Treilli treilli, SegmentTerrain seg, double pos, boolean simple) {
 		// constructeur pour la sauvegarde
-		super(id,treilli);
+		super(c,id,treilli);
 		this.seg = seg;
 		this.simple = simple;
 		if(pos < 0 || pos > 1) {throw new Error("Position mismatch");}
@@ -77,8 +77,8 @@ public class NoeudAppui extends Noeud {
 	
 	@Override
 	public String toString() {
-		if(simple == true) { return "AppuiSimple;"+this.getId()+ ";" +super.getTreilli().getId()+ ";"+this.getSeg()+";"+this.getPos();}
-		else { return "AppuiDouble;"+this.getId()+ ";" +super.getTreilli().getId()+ ";"+this.getSeg()+";"+this.getPos();}
+		if(simple == true) { return "AppuiSimple;"+this.getId()+ ";"+this.getSeg()+";"+this.getPos();}
+		else { return "AppuiDouble;"+this.getId()+";"+this.getSeg()+";"+this.getPos();}
 	}
 	
 	// Fonctions et Procedures

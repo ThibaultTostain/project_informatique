@@ -22,7 +22,6 @@ public class SimulIG
 		try {
 			BufferedReader sauv=new BufferedReader(new FileReader(nomDocument+".txt"));
 			String ligne;
-			String motSauv;
 			// On vide l'environnement de travail pour éviter d'avoir des traces de l'ancien treilli.
 			treilli.getTypeList().clear();
 			treilli.getBarreList().clear();
@@ -31,10 +30,9 @@ public class SimulIG
 			// Le reste va de toute façon être écrasé donc pas besoin de le supprimer
 			// On lit ligne après ligne notre fichier tampon
 				while((ligne=sauv.readLine())!=null) {
-					System.out.println(ligne);
-					StringTokenizer mot=new StringTokenizer(ligne, ";"); 
-					motSauv = mot.nextToken();
-					switch(motSauv) {
+					System.out.println(ligne); // Affiche ce qui est lu, l'utilisateur peut ainsi se rendre compte d'une erreur si le programme ne l'a pas vu.
+					StringTokenizer mot=new StringTokenizer(ligne, ";"); // définit notre élément de s'éparation
+					switch(mot.nextToken()) {
 						case ("Terrain"):
 							// set les coordonnées du terrain
 							terrain.setAbsMin(Double.parseDouble(mot.nextToken()));
@@ -62,13 +60,23 @@ public class SimulIG
 							treilli.getTypeList().get(0).setCount(Long.parseLong(mot.nextToken()));
 							break;
 						case ("AppuiDouble"):
-							treilli.getNoeudList().add(new NoeudAppui(mot.nextToken(),treilli,new SegmentTerrain(new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()))),Double.parseDouble(mot.nextToken()),false));
+							String tamponD = mot.nextToken();
+							long d = 0;
+							if (Long.parseLong(tamponD.substring(1,tamponD.length())) > d) {d = Long.parseLong(tamponD.substring(1,tamponD.length()));}
+							treilli.getNoeudList().add(new NoeudAppui(d,tamponD,treilli,new SegmentTerrain(new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()))),Double.parseDouble(mot.nextToken()),false));
+							treilli.getNoeudList().get(0);
 							break;
 						case ("AppuiSimple"):
-							treilli.getNoeudList().add(new NoeudAppui(mot.nextToken(),treilli,new SegmentTerrain(new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()))),Double.parseDouble(mot.nextToken()),true));
+							String tamponS = mot.nextToken();
+							long s = 0;
+							if (Long.parseLong(tamponS.substring(1,tamponS.length())) > s) {s = Long.parseLong(tamponS.substring(1,tamponS.length()));}
+							treilli.getNoeudList().add(new NoeudAppui(s,tamponS,treilli,new SegmentTerrain(new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())),new PointTerrain(terrain,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken()))),Double.parseDouble(mot.nextToken()),true));
 							break;
 						case ("NoeudSimple"):
-							treilli.getNoeudList().add(new NoeudSimple(mot.nextToken(),treilli,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())));
+							String tamponN = mot.nextToken();
+							long n = 0;
+							if (Long.parseLong(tamponN.substring(1,tamponN.length())) > n) {n = Long.parseLong(tamponN.substring(1,tamponN.length()));}
+							treilli.getNoeudList().add(new NoeudSimple(n,tamponN,treilli,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())));
 							break;
 						case ("Barre"): 
 							String noeudA = mot.nextToken();

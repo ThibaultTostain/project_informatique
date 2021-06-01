@@ -17,8 +17,8 @@ public class NoeudSimple extends Noeud
 		this.control();
 	}
 	
-	public NoeudSimple(String id,Treilli treilli, double abs, double ord) {
-		super(id,treilli);
+	public NoeudSimple(long c,String id,Treilli treilli, double abs, double ord) {
+		super(c,id,treilli);
 		this.abs = abs;
 		this.ord = ord;
 		this.control();
