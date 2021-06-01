@@ -386,14 +386,17 @@ public class SimulIG
 		while(!stop) {
 			System.out.println("\n____________________MENU____________________");
 			System.out.print("\n");
-			System.out.println("1 : Treillis");
+			System.out.println("1 : Afficher les éléments du treilli");
 			System.out.println("2 : Terrain");
-			System.out.println("3 : Triangle de terrain");
-			System.out.println("4 : Noeud");
-			System.out.println("5 : Barre");
-			System.out.println("6 : Force");
-			System.out.println("7 : Calculer");
+			System.out.println("3 : Noeud");
+			System.out.println("4 : Barre");
+			System.out.println("5 : Force");
+			System.out.println("6 : Calculer les efforts");
+			System.out.println("7 : Enregistrer le treilli");
+			System.out.println("8 : Ouvrir un fichier");
+			System.out.println();
 			System.out.println("0 : Quitter");
+			System.out.println();
 			System.out.print("Votre Choix : ");
 			choix = Lire.i();
 			
@@ -410,9 +413,14 @@ public class SimulIG
 			case 2:
 				System.out.println("\n___________________TERRAIN___________________");
 				System.out.print("\n");
-				System.out.println("1 : Modifier les limites du terrain");
-				System.out.println("2 : Afficher les éléments du terrain");
+				System.out.println("1 : Afficher les éléments du terrain");
+				System.out.println("2 : Modifier les limites du terrain");
+				System.out.println("3 : Créer un nouveau triangle");
+				System.out.println("4 : Modifier un triangle existant");
+				System.out.println("5 : Supprimer un triangle");
+				System.out.println();
 				System.out.println("0 : Revenir au menu");
+				System.out.println();
 				System.out.print("Votre Choix : ");
 				choix = Lire.i();
 				
@@ -420,57 +428,44 @@ public class SimulIG
 				default:
 					break;
 				case 1:
+					afficher(ter);
+					break;
+				case 2:
 					try {
 						modifyTerrain(ter);
 					} catch(java.lang.IndexOutOfBoundsException e) {
 						System.out.println("/Elément inexistant/");
 					}
 					break;
-				case 2:
-					afficher(ter);
-					break;
-				}
-				break;
-			case 3:
-				System.out.println("\n__________________TRIANGLE__________________");
-				System.out.print("\n");
-				System.out.println("1 : Créer un nouveau triangle");
-				System.out.println("2 : Modifier un triangle existant");
-				System.out.println("3 : Supprimer un triangle");
-				System.out.println("0 : Revenir au menu");
-				System.out.print("Votre Choix : ");
-				choix = Lire.i();
-				
-				switch(choix) {
-				default:
-					break;
-				case 1:
+				case 3:
 					try {
 						new TriangleTerrain(newPoint(ter),newPoint(ter),newPoint(ter));
 					} catch(java.lang.IndexOutOfBoundsException e) {
 						System.out.println("/Elément inexistant/");
 					}
 					break;
-				case 2:
+				case 4:
 					try {
 						modifyPoint(choosePoint(chooseTriangle(ter)));
 					} catch(java.lang.IndexOutOfBoundsException e) {
 						System.out.println("/Elément inexistant/");
 					}
 					break;
-				case 3:
+				case 5:
 					
 					break;
 				}
 				break;
-			case 4:
+			case 3:
 				System.out.println("\n____________________NOEUD____________________");
 				System.out.print("\n");
 				System.out.println("1 : Créer un nouveau noeud d'appui");
 				System.out.println("2 : Modifier un noeud simple existant");
 				System.out.println("3 : Modifier un appui existant");
 				System.out.println("4 : Supprimer un noeud");
+				System.out.println();
 				System.out.println("0 : Revenir au menu");
+				System.out.println();
 				System.out.print("Votre Choix : ");
 				choix = Lire.i();
 				
@@ -503,7 +498,7 @@ public class SimulIG
 					break;
 				}
 				break;
-			case 5:
+			case 4:
 				System.out.println("\n____________________BARRE____________________");
 				System.out.print("\n");
 				System.out.println("1 : Créer une nouvelle barre");
@@ -511,8 +506,9 @@ public class SimulIG
 				System.out.println("3 : Supprimer une barre");
 				System.out.println("4 : Créer un nouveau type");
 				System.out.println("5 : Modifier un type");
-				
+				System.out.println();
 				System.out.println("0 : Revenir au menu");
+				System.out.println();
 				System.out.print("Votre Choix : ");
 				choix = Lire.i();
 				
@@ -557,12 +553,15 @@ public class SimulIG
 					}
 				}
 				break;
-			case 6:
+			case 5:
 				System.out.println("\n____________________FORCE____________________");
+
 				System.out.print("\n");
 				System.out.println("1 : Appliquer une force sur un noeud");
 				System.out.println("2 : Supprimer une force sur un noeud");
+				System.out.println();
 				System.out.println("0 : Retour au menu");
+				System.out.println();
 				System.out.print("Votre Choix : ");
 				choix = Lire.i();
 				
@@ -585,9 +584,25 @@ public class SimulIG
 					break;
 				}
 			break;
-			case 7:
+			case 6:
+				System.out.println("\n__________________EFFORTS__________________");
+				System.out.print("\n");
 				calculs(trei);
 				break;
+			case 7:
+				System.out.println("\n_________________ENREGISTRER_________________");
+				System.out.print("\n");
+				System.out.println("Nom du fichier : ");
+				String sauv = Lire.S();
+				ecrireFichier(sauv, ter, trei);
+				break;
+			case 8:
+				System.out.println("\n___________________OUVRIR___________________");
+				System.out.print("\n");
+				System.out.println("Nom du fichier : ");
+				String ouvr = Lire.S();
+				ouvrirFichier(ouvr, ter, trei);
+				
 			}
 		}
 	}
