@@ -35,6 +35,22 @@ public class Barre {
 		end.getRamifi().add(this);
 	}
 	
+	public Barre(String id, Noeud start, Noeud end, TypeBarre type, Color color) {
+		super();
+		if(start.getTreilli() != end.getTreilli()) {throw new Error("Treilli mismatch");}
+		this.treilli = start.getTreilli();
+		this.start = start;
+		this.end = end;
+		this.type = type;
+		this.color = color;
+		this.id = id;
+		this.control();
+		treilli.getBarreList().add(this);
+		if(!treilli.getTypeList().contains(type)) {treilli.getTypeList().add(type);}
+		start.getRamifi().add(this);
+		end.getRamifi().add(this);
+	}
+	
 	// Get & Set
 	
 	public Treilli getTreilli() {
@@ -81,7 +97,7 @@ public class Barre {
 	
 	@Override
 	public String toString() {
-		return "Barre;"+id+";"+type.getId()+";"+start.getId()+";"+end.getId();
+		return "Barre;"+start.getId()+";"+end.getId()+";"+type.getId()+";"+id;
 	}
 	
 	// Fonctions et Procedures

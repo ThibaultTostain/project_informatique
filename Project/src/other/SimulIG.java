@@ -1,5 +1,6 @@
 package other;
 
+import java.awt.Color;
 import java.io.*;
 import java.util.*;
 import main.*; //import tout le package main
@@ -62,8 +63,28 @@ public class SimulIG
 						case ("NoeudSimple"):
 							treilli.getNoeudList().add(new NoeudSimple(mot.nextToken(),treilli,Double.parseDouble(mot.nextToken()),Double.parseDouble(mot.nextToken())));
 							break;
-						case ("Barre"):
-							treilli.getBarreList().add(null);
+						case ("Barre"): 
+							String noeudA = mot.nextToken();
+							String noeudB = mot.nextToken();
+							String typeBarre = mot.nextToken();
+							int A,B,TB;
+							A=B=TB=0;
+							// On retrouver les noeuds qui ont servit à faire la barre
+							for(int i = 0 ; i < treilli.getNoeudList().size();i++) {
+								if (noeudA.equals(treilli.getNoeudList().get(i).getId())) {
+									A = i;
+								}
+								if (noeudB.equals(treilli.getNoeudList().get(i).getId())) {
+									B = i;
+								}
+							}
+							// On retrouve le type de la barre
+							for (int i = 0; i < treilli.getTypeList().size();i++) {
+								if(typeBarre.equals(treilli.getTypeList().get(i))) {
+									TB = i;
+								}
+							}
+							treilli.getBarreList().add(new Barre(mot.nextToken(),treilli.getNoeudList().get(A),treilli.getNoeudList().get(B),treilli.getTypeList().get(TB), Color.black)); // parcourir la liste de noeud pour trouver quel noeud à cette id =)
 							break;
 						default : // optionel pour le switch mais permet de me prévenir si aucun cas c'est arrivé
 							System.out.println("SimullG : ouvrirFichier() : une ligne n'a pas de correspondance");
