@@ -23,6 +23,13 @@ public class SimulIG
 			BufferedReader sauv=new BufferedReader(new FileReader(nomDocument+".txt"));
 			String ligne;
 			String motSauv;
+			// On vide l'environnement de travail pour éviter d'avoir des traces de l'ancien treilli.
+			treilli.getTypeList().clear();
+			treilli.getBarreList().clear();
+			treilli.getNoeudList().clear();
+			terrain.getSol().clear();
+			// Le reste va de toute façon être écrasé donc pas besoin de le supprimer
+			// On lit ligne après ligne notre fichier tampon
 				while((ligne=sauv.readLine())!=null) {
 					System.out.println(ligne);
 					StringTokenizer mot=new StringTokenizer(ligne, ";"); 
@@ -90,7 +97,7 @@ public class SimulIG
 							System.out.println("SimullG : ouvrirFichier() : une ligne n'a pas de correspondance");
 					}
 				}
-			sauv.close();
+			sauv.close(); // permet de fermer la mémoire tampon BufferedReader
 		}
 		catch (FileNotFoundException err) {System.out.println("Main : sauvgarder() : Fichier introuvable");} //erreur en cas de non lecture de fichier
 		catch (IOException err) {System.out.println("Main : sauvgarder() : Fichier illisible");} // Erreur pour la lecture ou la suppression du fichier
@@ -123,7 +130,7 @@ public class SimulIG
 				sauv.write(""+barreList.get(i));
 				sauv.newLine();
 			}
-			sauv.close();
+			sauv.close(); // permet de fermer la mémoire tampon BufferedWriter
 		}
 		catch (IOException err) {System.out.println("Main : ecricreFichier : impossible de créer le fichier");}
 	}
