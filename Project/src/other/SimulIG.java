@@ -230,7 +230,7 @@ public class SimulIG
 	
 	public static NoeudSimple chooseNoeudSimple(Treilli trei) {
 		int num, k=0;
-		System.out.println("\nChoisir un noeud");
+		System.out.println("\nChoisir un noeud simple");
 		for(Noeud i : trei.getNoeudList()) {
 			k++;
 			if(i instanceof NoeudSimple) {
@@ -360,7 +360,7 @@ public class SimulIG
 	
 	public static Barre chooseBarre(Treilli trei) {
 		int num, k=0;
-		System.out.println("\nChoisir un type");
+		System.out.println("\nChoisir une barre");
 		for(Barre i : trei.getBarreList()) {
 			k++;
 			System.out.println(k+" : "+i);
@@ -423,7 +423,7 @@ public class SimulIG
 					try {
 						modifyTerrain(ter);
 					} catch(java.lang.IndexOutOfBoundsException e) {
-						
+						System.out.println("/Elément inexistant/");
 					}
 					break;
 				case 2:
@@ -448,14 +448,14 @@ public class SimulIG
 					try {
 						new TriangleTerrain(newPoint(ter),newPoint(ter),newPoint(ter));
 					} catch(java.lang.IndexOutOfBoundsException e) {
-						
+						System.out.println("/Elément inexistant/");
 					}
 					break;
 				case 2:
 					try {
 						modifyPoint(choosePoint(chooseTriangle(ter)));
 					} catch(java.lang.IndexOutOfBoundsException e) {
-						
+						System.out.println("/Elément inexistant/");
 					}
 					break;
 				case 3:
@@ -484,21 +484,21 @@ public class SimulIG
 					try {
 						modifyNoeudSimple(chooseNoeudSimple(trei));
 					} catch(java.lang.IndexOutOfBoundsException e) {
-					
+						System.out.println("/Elément inexistant/");
 					}
 					break;
 				case 3:
 					try {
 						modifyAppui(chooseAppui(trei));
 					} catch(java.lang.IndexOutOfBoundsException e) {
-					
+						System.out.println("/Elément inexistant/");
 					}
 					break;
 				case 4:
 					try {
 						chooseNoeud(trei).delete();
 					} catch(java.lang.IndexOutOfBoundsException e) {
-						
+						System.out.println("/Elément inexistant/");
 					}
 					break;
 				}
@@ -523,6 +523,8 @@ public class SimulIG
 					try {
 						new Barre(chooseNoeud(trei),newNoeudSimple(trei), chooseType());
 					} catch(java.lang.IndexOutOfBoundsException e) {
+						System.out.println("/Elément inexistant/");
+					} catch(java.lang.Error e) {
 						
 					}
 					break;
@@ -530,6 +532,8 @@ public class SimulIG
 					try {
 						new Barre(chooseNoeud(trei), chooseNoeud(trei), chooseType());
 					} catch(java.lang.IndexOutOfBoundsException e) {
+						System.out.println("/Elément inexistant/");
+					} catch(java.lang.Error e) {
 						
 					}
 					break;
@@ -537,6 +541,8 @@ public class SimulIG
 					try {
 						chooseBarre(trei).delete();
 					} catch(java.lang.IndexOutOfBoundsException e) {
+						System.out.println("/Elément inexistant/");
+					} catch(java.lang.Error e) {
 						
 					}
 					break;
@@ -547,7 +553,7 @@ public class SimulIG
 					try {
 						modifyType(chooseType());
 					} catch(java.lang.IndexOutOfBoundsException e) {
-						
+						System.out.println("/Elément inexistant/");
 					}
 				}
 				break;
@@ -564,10 +570,18 @@ public class SimulIG
 				default:
 					break;
 				case 1:
-					modifyForce(chooseNoeud(trei));
+					try {
+						modifyForce(chooseNoeud(trei));
+					} catch(java.lang.IndexOutOfBoundsException e) {
+						System.out.println("/Elément inexistant/");
+					}
 					break;
 				case 2:
-					supprForce(chooseNoeud(trei));
+					try {
+						supprForce(chooseNoeud(trei));
+					} catch(java.lang.IndexOutOfBoundsException e) {
+						System.out.println("/Elément inexistant/");
+					}
 					break;
 				}
 			break;
